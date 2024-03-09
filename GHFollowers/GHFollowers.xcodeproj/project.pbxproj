@@ -16,6 +16,9 @@
 		D4EFCCBC2B9B8FE9005F2E44 /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFCCBB2B9B8FE9005F2E44 /* GFButton.swift */; };
 		D4EFCCBE2B9B9216005F2E44 /* GFTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFCCBD2B9B9216005F2E44 /* GFTextField.swift */; };
 		D4EFCCC22B9BD2F2005F2E44 /* FollowerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EFCCC12B9BD2F2005F2E44 /* FollowerListViewController.swift */; };
+		D4EFCCC52B9BE433005F2E44 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = D4EFCCC42B9BE433005F2E44 /* .swiftlint.yml */; };
+		D4EFCCC72B9BE45F005F2E44 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = D4EFCCC62B9BE45F005F2E44 /* .swiftformat */; };
+		D4EFCCC92B9BE47C005F2E44 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = D4EFCCC82B9BE47C005F2E44 /* .swift-version */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +33,9 @@
 		D4EFCCBB2B9B8FE9005F2E44 /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
 		D4EFCCBD2B9B9216005F2E44 /* GFTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFTextField.swift; sourceTree = "<group>"; };
 		D4EFCCC12B9BD2F2005F2E44 /* FollowerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerListViewController.swift; sourceTree = "<group>"; };
+		D4EFCCC42B9BE433005F2E44 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D4EFCCC62B9BE45F005F2E44 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
+		D4EFCCC82B9BE47C005F2E44 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +75,9 @@
 				D4CB392F2B8FF1F400071554 /* Assets.xcassets */,
 				D4CB39312B8FF1F400071554 /* LaunchScreen.storyboard */,
 				D4CB39342B8FF1F400071554 /* Info.plist */,
+				D4EFCCC42B9BE433005F2E44 /* .swiftlint.yml */,
+				D4EFCCC62B9BE45F005F2E44 /* .swiftformat */,
+				D4EFCCC82B9BE47C005F2E44 /* .swift-version */,
 			);
 			path = GHFollowers;
 			sourceTree = "<group>";
@@ -102,6 +111,7 @@
 				D4CB391F2B8FF1F300071554 /* Sources */,
 				D4CB39202B8FF1F300071554 /* Frameworks */,
 				D4CB39212B8FF1F300071554 /* Resources */,
+				D4EFCCC32B9BE3D0005F2E44 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -150,12 +160,36 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4EFCCC72B9BE45F005F2E44 /* .swiftformat in Resources */,
+				D4EFCCC52B9BE433005F2E44 /* .swiftlint.yml in Resources */,
 				D4CB39332B8FF1F400071554 /* LaunchScreen.storyboard in Resources */,
 				D4CB39302B8FF1F400071554 /* Assets.xcassets in Resources */,
+				D4EFCCC92B9BE47C005F2E44 /* .swift-version in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D4EFCCC32B9BE3D0005F2E44 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n  if \"$CI\" == true; then\n  \n    if which swiftformat > /dev/null; then\n        swiftformat .\n    else\n      echo \"warning: SwiftFormat not installed, download from https://github.com/nicklockwood/SwiftFormat\"\n    fi\n    \n    swiftlint --no-cache --strict\n    \n  elif [ \"$ACTION\" = 'build' ]; then\n    swiftlint\n  fi\n  \nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D4CB391F2B8FF1F300071554 /* Sources */ = {
@@ -223,7 +257,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -286,7 +320,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
