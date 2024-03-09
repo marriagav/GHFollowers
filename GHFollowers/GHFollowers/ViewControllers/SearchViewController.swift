@@ -78,7 +78,8 @@ class SearchViewController: UIViewController {
             print("No username")
             return
         }
-        let followersListVC = FollowerListViewController(username: usernameTextField.text ?? "")
+        let followersListVC = FollowerListViewController()
+        followersListVC.username = usernameTextField.text ?? ""
         followersListVC.title = usernameTextField.text
         navigationController?.pushViewController(followersListVC, animated: true)
     }
