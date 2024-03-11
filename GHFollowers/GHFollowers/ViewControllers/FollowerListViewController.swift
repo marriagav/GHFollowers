@@ -16,17 +16,17 @@ class FollowerListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
 
         // With callback
-        NetworkManager.shared.getFollowers(for: username, page: 1) { followers, error in
-            guard let followers = followers else {
+        NetworkManager.shared.getFollowers(for: username, page: 1) { result in
+            switch result {
+            case let .success(followers):
+                print(followers)
+            case let .failure(error):
                 self.presentGFAlertOnMainThread(
                     title: "Bad stuff happened",
-                    message: error ?? "There was an error, please try again.",
+                    message: error.localizedDescription,
                     buttonTitle: "Ok"
                 )
-                return
             }
-
-            print(followers)
         }
 
         // With async/await
