@@ -9,6 +9,7 @@ import Foundation
 
 enum GFError: Error {
     case invalidUsername
+    case invalidURL
     case unableToComplete
     case invalidResponse
     case invalidData
@@ -27,6 +28,8 @@ extension GFError: LocalizedError {
             return String(localized: "Invalid response from the server. Please try again.")
         case .invalidData:
             return String(localized: "The data recieved from the server was invalid. Please try again.")
+        case .invalidURL:
+            return String(localized: "The request url is invalid. Please try again.")
         }
     }
 }
