@@ -10,13 +10,13 @@ import UIKit
 private var containerView: UIView?
 
 extension UIViewController {
+
+    @MainActor
     func presentGFAlertOnMainThread(title: String, message: String, buttonTitle: String) {
-        DispatchQueue.main.async {
-            let alertVC = GFAlertViewController(alertTitle: title, message: message, buttonTitle: buttonTitle)
-            alertVC.modalPresentationStyle = .overFullScreen
-            alertVC.modalTransitionStyle = .crossDissolve
-            self.present(alertVC, animated: true)
-        }
+        let alertVC = GFAlertViewController(alertTitle: title, message: message, buttonTitle: buttonTitle)
+        alertVC.modalPresentationStyle = .overFullScreen
+        alertVC.modalTransitionStyle = .crossDissolve
+        present(alertVC, animated: true)
     }
 
     @MainActor
@@ -50,5 +50,12 @@ extension UIViewController {
             containerView.removeFromSuperview()
         }
         containerView = nil
+    }
+
+    @MainActor
+    func showEmptyStateView(with message: String, in view: UIView) {
+        let emptyStateView = GFEmptyStateView(message: message)
+        emptyStateView.frame = view.bounds
+        view.addSubview(emptyStateView)
     }
 }

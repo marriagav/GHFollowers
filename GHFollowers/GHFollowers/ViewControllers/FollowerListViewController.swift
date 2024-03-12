@@ -16,6 +16,7 @@ class FollowerListViewController: UIViewController {
     var collectionView: UICollectionView?
     var dataSource: UICollectionViewDiffableDataSource<Section, Follower>?
     var followers: [Follower] = []
+    var filteredFollowers: [Follower] = []
     var page = 1
     var hasMoreFollowers = true
 
@@ -23,6 +24,7 @@ class FollowerListViewController: UIViewController {
         super.viewDidLoad()
         configureViewController()
         configureCollectionView()
+        configureSearchController()
         Task {
             await getFollowers()
         }
@@ -53,24 +55,15 @@ class FollowerListViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
 
-    func getFollowers() async {
-        // With callback
-//        NetworkManager.shared.getFollowers(for: username, page: 1) { [weak self] result in
-//            guard let self = self else { return }
-//            switch result {
-//            case let .success(followers):
-//                self.followers = followers
-//                self.updateData()
-//            case let .failure(error):
-//                self.presentGFAlertOnMainThread(
-//                    title: "Bad stuff happened",
-//                    message: error.localizedDescription,
-//                    buttonTitle: "Ok"
-//                )
-//            }
-//        }
+    func configureSearchController() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.placeholder = "Search for a username"
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = false
+    }
 
-        // With async/await
+    func getFollowers() async {
         showLoadingView()
         do {
             let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
@@ -78,7 +71,13 @@ class FollowerListViewController: UIViewController {
                 hasMoreFollowers = false
             }
             self.followers.append(contentsOf: followers)
-            updateData()
+            if self.followers.isEmpty {
+                let message = "This user doesn't have any followers. Go Follow them 😄."
+                showEmptyStateView(with: message, in: view)
+                dismissLoadingView()
+                return
+            }
+            updateData(on: self.followers)
             dismissLoadingView()
         } catch {
             dismissLoadingView()
@@ -106,7 +105,7 @@ class FollowerListViewController: UIViewController {
         }
     }
 
-    func updateData() {
+    func updateData(on followers: [Follower]) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         snapshot.appendSections([.main])
         snapshot.appendItems(followers)
@@ -128,5 +127,20 @@ extension FollowerListViewController: UICollectionViewDelegate {
                 await getFollowers()
             }
         }
+    }
+}
+
+// MARK: UISearchResultsUpdating
+
+extension FollowerListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else {
+            updateData(on: followers)
+            return
+        }
+        filteredFollowers = followers.filter { follower in
+            follower.login.lowercased().contains(filter.lowercased())
+        }
+        updateData(on: filteredFollowers)
     }
 }
