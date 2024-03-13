@@ -31,6 +31,9 @@
 		D4EFCCC52B9BE433005F2E44 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = D4EFCCC42B9BE433005F2E44 /* .swiftlint.yml */; };
 		D4EFCCC72B9BE45F005F2E44 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = D4EFCCC62B9BE45F005F2E44 /* .swiftformat */; };
 		D4EFCCC92B9BE47C005F2E44 /* .swift-version in Resources */ = {isa = PBXBuildFile; fileRef = D4EFCCC82B9BE47C005F2E44 /* .swift-version */; };
+		D4FE11A72BA141370070F607 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE11A62BA141370070F607 /* UserInfoViewController.swift */; };
+		D4FE11A92BA15B670070F607 /* UserCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE11A82BA15B670070F607 /* UserCardView.swift */; };
+		D4FE11AC2BA177500070F607 /* GFIconLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FE11AB2BA177500070F607 /* GFIconLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +63,9 @@
 		D4EFCCC42B9BE433005F2E44 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		D4EFCCC62B9BE45F005F2E44 /* .swiftformat */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		D4EFCCC82B9BE47C005F2E44 /* .swift-version */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-version"; sourceTree = "<group>"; };
+		D4FE11A62BA141370070F607 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		D4FE11A82BA15B670070F607 /* UserCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCardView.swift; sourceTree = "<group>"; };
+		D4FE11AB2BA177500070F607 /* GFIconLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFIconLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +150,8 @@
 			isa = PBXGroup;
 			children = (
 				D4AEBFC02BA0BF340055EC47 /* GFEmptyStateView.swift */,
+				D4FE11A82BA15B670070F607 /* UserCardView.swift */,
+				D4FE11AB2BA177500070F607 /* GFIconLabel.swift */,
 			);
 			path = UIViews;
 			sourceTree = "<group>";
@@ -200,6 +208,7 @@
 				D41B7D152B9A61F3005BEE39 /* FavoritesListViewController.swift */,
 				D4EFCCC12B9BD2F2005F2E44 /* FollowerListViewController.swift */,
 				D4B42AB52B9CF3F700278507 /* GFAlertViewController.swift */,
+				D4FE11A62BA141370070F607 /* UserInfoViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -314,10 +323,12 @@
 			files = (
 				D47719002B9E335F00A45147 /* User.swift in Sources */,
 				D4B42AB62B9CF3F700278507 /* GFAlertViewController.swift in Sources */,
+				D4FE11AC2BA177500070F607 /* GFIconLabel.swift in Sources */,
 				D4EFCCBE2B9B9216005F2E44 /* GFTextField.swift in Sources */,
 				D41B7D162B9A61F3005BEE39 /* FavoritesListViewController.swift in Sources */,
 				D4EFCCBC2B9B8FE9005F2E44 /* GFButton.swift in Sources */,
 				D4AEBFB72BA0A4A50055EC47 /* UIHelper.swift in Sources */,
+				D4FE11A92BA15B670070F607 /* UserCardView.swift in Sources */,
 				D4AEBFB52B9F8CCF0055EC47 /* GFAvatarImageView.swift in Sources */,
 				D4EFCCC22B9BD2F2005F2E44 /* FollowerListViewController.swift in Sources */,
 				D4B42AB42B9CF36000278507 /* GFBodyLabel.swift in Sources */,
@@ -329,6 +340,7 @@
 				D4AEBFC12BA0BF340055EC47 /* GFEmptyStateView.swift in Sources */,
 				D4AEBFB02B9F538D0055EC47 /* GFError.swift in Sources */,
 				D41B7D142B9A61C8005BEE39 /* SearchViewController.swift in Sources */,
+				D4FE11A72BA141370070F607 /* UserInfoViewController.swift in Sources */,
 				D47719032B9E36F600A45147 /* NetworkManager.swift in Sources */,
 				D4CB39292B8FF1F300071554 /* SceneDelegate.swift in Sources */,
 			);

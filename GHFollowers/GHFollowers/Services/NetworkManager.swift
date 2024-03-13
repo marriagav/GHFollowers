@@ -51,6 +51,24 @@ class NetworkManager {
         }
     }
 
+    func getUser(for username: String) async throws -> User {
+        guard var url = URL(string: baseURL) else {
+            throw GFError.invalidUsername
+        }
+        url.append(path: username)
+
+        let data = try await getRequest(url: url)
+
+        do {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            let user = try decoder.decode(User.self, from: data)
+            return user
+        } catch {
+            throw (GFError.invalidData)
+        }
+    }
+
     // With callback
     func getFollowers(
         for username: String,

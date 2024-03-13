@@ -10,7 +10,6 @@ import UIKit
 private var containerView: UIView?
 
 extension UIViewController {
-
     @MainActor
     func presentGFAlertOnMainThread(title: String, message: String, buttonTitle: String) {
         let alertVC = GFAlertViewController(alertTitle: title, message: message, buttonTitle: buttonTitle)
