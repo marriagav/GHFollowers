@@ -16,19 +16,7 @@ class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureDoneButton()
-        Task {
-            await getUser()
-            userCardView = UserCardView(frame: .zero)
-            userCardView?.user = user
-            guard let userCardView = userCardView else { return }
-            userCardView.configureCard()
-            view.addSubview(userCardView)
-            NSLayoutConstraint.activate([
-                userCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-                userCardView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                userCardView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-            ])
-        }
+        configureUserCard()
     }
 
     @objc
@@ -43,6 +31,22 @@ class UserInfoViewController: UIViewController {
         standardAppearance.configureWithOpaqueBackground()
         standardAppearance.backgroundColor = .secondarySystemBackground
         navigationController?.navigationBar.scrollEdgeAppearance = standardAppearance
+    }
+
+    func configureUserCard() {
+        Task {
+            await getUser()
+            userCardView = UserCardView(frame: .zero)
+            userCardView?.user = user
+            guard let userCardView = userCardView else { return }
+            userCardView.configureCard()
+            view.addSubview(userCardView)
+            NSLayoutConstraint.activate([
+                userCardView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+                userCardView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+                userCardView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+            ])
+        }
     }
 
     func getUser() async {

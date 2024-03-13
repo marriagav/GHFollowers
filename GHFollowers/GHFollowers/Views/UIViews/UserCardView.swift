@@ -12,7 +12,6 @@ class UserCardView: UIView {
     let avatarImageView = GFAvatarImageView(frame: .zero)
     var usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 35)
     var nameLabel = GFBodyLabel(textAlignment: .left)
-//    var locationLabel = GFBodyLabel(textAlignment: .left)
     var locationLabel = GFIconLabel(textAlignment: .left)
     var bioLabel = GFBodyLabel(textAlignment: .left)
 
