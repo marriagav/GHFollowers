@@ -10,10 +10,17 @@ import UIKit
 class UserCardView: UIView {
     var user: User?
     let avatarImageView = GFAvatarImageView(frame: .zero)
-    var usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 35)
-    var nameLabel = GFBodyLabel(textAlignment: .left)
-    var locationLabel = GFIconLabel(textAlignment: .left)
+    var usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
+    var nameLabel = GFSecondaryTitleLabel(frame: .zero)
+    var locationLabel = GFIconLabel(label: GFSecondaryTitleLabel(frame: .zero), textAlignment: .left)
     var bioLabel = GFBodyLabel(textAlignment: .left)
+
+    init(frame: CGRect, user: User? = nil) {
+        super.init(frame: frame)
+        self.user = user
+        translatesAutoresizingMaskIntoConstraints = false
+        configureCard()
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,8 +38,8 @@ class UserCardView: UIView {
         }
         configureAvatarImage()
         configureUsernameLabel()
-        configureLocationLabel()
         configureNameLabel()
+        configureLocationLabel()
         configureBioLabel()
     }
 
@@ -42,7 +49,7 @@ class UserCardView: UIView {
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: topAnchor),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 100),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 90),
             avatarImageView.widthAnchor.constraint(equalTo: avatarImageView.heightAnchor)
         ])
     }
@@ -53,59 +60,49 @@ class UserCardView: UIView {
 
         NSLayoutConstraint.activate([
             usernameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
-            usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 10),
+            usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 12),
             usernameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            usernameLabel.heightAnchor.constraint(equalToConstant: 40)
+            usernameLabel.heightAnchor.constraint(equalToConstant: 38)
         ])
     }
 
     private func configureNameLabel() {
-        let container = UIView()
-        container.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(container)
         nameLabel.text = user?.name
-        nameLabel.font = .preferredFont(forTextStyle: .headline)
-        container.addSubview(nameLabel)
+        addSubview(nameLabel)
 
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: usernameLabel.bottomAnchor),
-            container.bottomAnchor.constraint(equalTo: locationLabel.topAnchor),
-            container.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
-            container.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
-
-            nameLabel.leadingAnchor.constraint(equalTo: container.leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
-            nameLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
+            nameLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
+            nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 8),
             nameLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 
     private func configureLocationLabel() {
-        locationLabel.label.text = user?.location
-        locationLabel.label.font = .preferredFont(forTextStyle: .headline)
+        locationLabel.label?.text = user?.location
         if user?.location != nil {
-            locationLabel.icon.image = UIImage(systemName: "mappin.and.ellipse")
+            locationLabel.icon.image = UIImage(systemName: SFSymbols.location)
         }
         addSubview(locationLabel)
 
         NSLayoutConstraint.activate([
-            locationLabel.heightAnchor.constraint(equalToConstant: 20),
             locationLabel.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
             locationLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
-            locationLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor)
+            locationLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor),
+            locationLabel.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 
     private func configureBioLabel() {
         bioLabel.text = user?.bio
-
         addSubview(bioLabel)
         bioLabel.numberOfLines = 3
 
         NSLayoutConstraint.activate([
-            bioLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 20),
+            bioLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 12),
             bioLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            bioLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor)
+            bioLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
+            bioLabel.heightAnchor.constraint(equalToConstant: 60)
         ])
     }
 }
