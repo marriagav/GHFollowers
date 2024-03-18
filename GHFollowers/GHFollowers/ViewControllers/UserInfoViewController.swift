@@ -11,6 +11,8 @@ class UserInfoViewController: UIViewController {
     var follower: Follower?
     var user: User?
     let headerView = UIView()
+    let itemViewOne = UIView()
+    let itemViewTwo = UIView()
 
     init(follower: Follower? = nil) {
         super.init(nibName: nil, bundle: nil)
@@ -26,7 +28,7 @@ class UserInfoViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         configureDoneButton()
-        configureHeaderView()
+        layoutUI()
         Task {
             await getUser()
             add(childVC: HeaderUserInfoViewController(user: user), to: headerView)
@@ -60,22 +62,45 @@ class UserInfoViewController: UIViewController {
         }
     }
 
-    func configureHeaderView() {
-        view.addSubview(headerView)
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            headerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            headerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            headerView.heightAnchor.constraint(equalToConstant: 180)
-        ])
-    }
-
     @MainActor
     func add(childVC: UIViewController, to containerView: UIView) {
         addChild(childVC)
         containerView.addSubview(childVC.view)
         childVC.view.frame = containerView.bounds
         childVC.didMove(toParent: self)
+    }
+
+    func layoutUI() {
+        let itemViews = [headerView, itemViewOne, itemViewTwo]
+
+        let padding: CGFloat = 20
+        let itemHeight: CGFloat = 140
+
+        itemViews.forEach { itemView in
+            view.addSubview(itemView)
+            itemView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint.activate([
+                itemView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: padding),
+                itemView.trailingAnchor.constraint(
+                    equalTo: view.safeAreaLayoutGuide.trailingAnchor,
+                    constant: -padding
+                )
+            ])
+        }
+
+        // TODO: temp code
+        itemViewOne.backgroundColor = .systemPink
+        itemViewTwo.backgroundColor = .systemCyan
+
+        NSLayoutConstraint.activate([
+            headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),
+            headerView.heightAnchor.constraint(equalToConstant: 170),
+
+            itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding),
+            itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
+
+            itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor, constant: padding),
+            itemViewTwo.heightAnchor.constraint(equalTo: itemViewOne.heightAnchor)
+        ])
     }
 }

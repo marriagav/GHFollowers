@@ -8,9 +8,8 @@
 import UIKit
 
 class GFIconLabel: UIView {
-//    var label = GFBodyLabel(frame: .zero)
     var label: UILabel?
-    var icon = UIImageView()
+    var iconView = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,28 +21,30 @@ class GFIconLabel: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(label: UILabel, textAlignment: NSTextAlignment) {
+    init(label: UILabel, systemIcon: String, textAlignment: NSTextAlignment) {
         super.init(frame: .zero)
         label.textAlignment = textAlignment
+        iconView.image = UIImage(systemName: systemIcon)
         self.label = label
         configure()
     }
 
     private func configure() {
         guard let label = label else { return }
-        icon.tintColor = .secondaryLabel
-        addSubview(icon)
+        iconView.tintColor = .secondaryLabel
+        iconView.contentMode = .scaleAspectFill
+        addSubview(iconView)
         addSubview(label)
-        icon.translatesAutoresizingMaskIntoConstraints = false
+        iconView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            icon.leadingAnchor.constraint(equalTo: leadingAnchor),
-            icon.topAnchor.constraint(equalTo: topAnchor),
-            icon.bottomAnchor.constraint(equalTo: bottomAnchor),
-            icon.widthAnchor.constraint(equalTo: icon.heightAnchor),
+            iconView.leadingAnchor.constraint(equalTo: leadingAnchor),
+            iconView.topAnchor.constraint(equalTo: topAnchor),
+            iconView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
 
-            label.leadingAnchor.constraint(equalTo: icon.trailingAnchor, constant: 10),
+            label.leadingAnchor.constraint(equalTo: iconView.trailingAnchor, constant: 12),
             label.topAnchor.constraint(equalTo: topAnchor),
             label.bottomAnchor.constraint(equalTo: bottomAnchor),
             label.trailingAnchor.constraint(equalTo: trailingAnchor)

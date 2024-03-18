@@ -12,7 +12,11 @@ class UserCardView: UIView {
     let avatarImageView = GFAvatarImageView(frame: .zero)
     var usernameLabel = GFTitleLabel(textAlignment: .left, fontSize: 34)
     var nameLabel = GFSecondaryTitleLabel(frame: .zero)
-    var locationLabel = GFIconLabel(label: GFSecondaryTitleLabel(frame: .zero), textAlignment: .left)
+    var locationLabel = GFIconLabel(
+        label: GFSecondaryTitleLabel(frame: .zero),
+        systemIcon: SFSymbols.location,
+        textAlignment: .left
+    )
     var bioLabel = GFBodyLabel(textAlignment: .left)
 
     init(frame: CGRect, user: User? = nil) {
@@ -81,16 +85,14 @@ class UserCardView: UIView {
     private func configureLocationLabel() {
         locationLabel.label?.text = user?.location
         if user?.location != nil {
-            locationLabel.icon.image = UIImage(systemName: SFSymbols.location)
+            addSubview(locationLabel)
+            NSLayoutConstraint.activate([
+                locationLabel.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
+                locationLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
+                locationLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor),
+                locationLabel.heightAnchor.constraint(equalToConstant: 20)
+            ])
         }
-        addSubview(locationLabel)
-
-        NSLayoutConstraint.activate([
-            locationLabel.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
-            locationLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
-            locationLabel.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor),
-            locationLabel.heightAnchor.constraint(equalToConstant: 20)
-        ])
     }
 
     private func configureBioLabel() {
@@ -101,8 +103,7 @@ class UserCardView: UIView {
         NSLayoutConstraint.activate([
             bioLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 12),
             bioLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            bioLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
-            bioLabel.heightAnchor.constraint(equalToConstant: 60)
+            bioLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor)
         ])
     }
 }
