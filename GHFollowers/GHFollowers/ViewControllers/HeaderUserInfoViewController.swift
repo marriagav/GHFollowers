@@ -34,8 +34,7 @@ class HeaderUserInfoViewController: UIViewController {
         NSLayoutConstraint.activate([
             userCardView.topAnchor.constraint(equalTo: view.topAnchor),
             userCardView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            userCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            userCardView.heightAnchor.constraint(equalTo: view.heightAnchor)
+            userCardView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
     }
 }

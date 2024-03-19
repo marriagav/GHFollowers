@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D40313442BAA0DB100684402 /* String-ToDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40313432BAA0DB100684402 /* String-ToDate.swift */; };
+		D40313462BAA0EA800684402 /* Date-ToString.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40313452BAA0EA800684402 /* Date-ToString.swift */; };
 		D41B7D142B9A61C8005BEE39 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B7D132B9A61C8005BEE39 /* SearchViewController.swift */; };
 		D41B7D162B9A61F3005BEE39 /* FavoritesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41B7D152B9A61F3005BEE39 /* FavoritesListViewController.swift */; };
 		D43DBE592BA4FFF600E5D2E5 /* GFIconLabelCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43DBE582BA4FFF600E5D2E5 /* GFIconLabelCountView.swift */; };
@@ -44,6 +46,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D40313432BAA0DB100684402 /* String-ToDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String-ToDate.swift"; sourceTree = "<group>"; };
+		D40313452BAA0EA800684402 /* Date-ToString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date-ToString.swift"; sourceTree = "<group>"; };
 		D41B7D132B9A61C8005BEE39 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		D41B7D152B9A61F3005BEE39 /* FavoritesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesListViewController.swift; sourceTree = "<group>"; };
 		D43DBE582BA4FFF600E5D2E5 /* GFIconLabelCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFIconLabelCountView.swift; sourceTree = "<group>"; };
@@ -187,6 +191,8 @@
 			isa = PBXGroup;
 			children = (
 				D4B42AB82B9CFA7D00278507 /* UIViewController-Indicators.swift */,
+				D40313432BAA0DB100684402 /* String-ToDate.swift */,
+				D40313452BAA0EA800684402 /* Date-ToString.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -353,6 +359,7 @@
 				D47719002B9E335F00A45147 /* User.swift in Sources */,
 				D47B34862BA26068003FE3C0 /* UserInfoViewController.swift in Sources */,
 				D4B42AB62B9CF3F700278507 /* GFAlertViewController.swift in Sources */,
+				D40313442BAA0DB100684402 /* String-ToDate.swift in Sources */,
 				D4FE11AC2BA177500070F607 /* GFIconLabel.swift in Sources */,
 				D4EFCCBE2B9B9216005F2E44 /* GFTextField.swift in Sources */,
 				D41B7D162B9A61F3005BEE39 /* FavoritesListViewController.swift in Sources */,
@@ -373,6 +380,7 @@
 				D4B42AB92B9CFA7D00278507 /* UIViewController-Indicators.swift in Sources */,
 				D4AEBFC12BA0BF340055EC47 /* GFEmptyStateView.swift in Sources */,
 				D4AEBFB02B9F538D0055EC47 /* GFError.swift in Sources */,
+				D40313462BAA0EA800684402 /* Date-ToString.swift in Sources */,
 				D43DBE592BA4FFF600E5D2E5 /* GFIconLabelCountView.swift in Sources */,
 				D41B7D142B9A61C8005BEE39 /* SearchViewController.swift in Sources */,
 				D4FE11A72BA141370070F607 /* HeaderUserInfoViewController.swift in Sources */,

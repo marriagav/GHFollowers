@@ -61,7 +61,7 @@ class GFIconLabelCountView: UIView {
             iconLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            countLabel.topAnchor.constraint(equalTo: iconLabel.bottomAnchor, constant: 8),
+            countLabel.topAnchor.constraint(equalTo: iconLabel.bottomAnchor, constant: 3),
             countLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             countLabel.centerXAnchor.constraint(equalTo: iconLabel.centerXAnchor)
         ])
