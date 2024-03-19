@@ -20,6 +20,10 @@ class GFIconLabelCountView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        countLabel = GFTitleLabel(textAlignment: .center, fontSize: 14)
+        iconLabel = GFIconLabel(frame: .zero)
+        countLabel?.translatesAutoresizingMaskIntoConstraints = false
+        iconLabel?.translatesAutoresizingMaskIntoConstraints = false
         configure()
     }
 
@@ -37,6 +41,7 @@ class GFIconLabelCountView: UIView {
 
     init(itemInfoType: ItemInfoType, withCount count: Int) {
         super.init(frame: .zero)
+        countLabel = GFTitleLabel(textAlignment: .center, fontSize: 14)
         set(itemInfoType: itemInfoType, withCount: count)
         configure()
     }
@@ -55,52 +60,46 @@ class GFIconLabelCountView: UIView {
             iconLabel.topAnchor.constraint(equalTo: topAnchor),
             iconLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             iconLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-            iconLabel.heightAnchor.constraint(equalToConstant: 20),
 
-            countLabel.topAnchor.constraint(equalTo: iconLabel.bottomAnchor, constant: 12),
+            countLabel.topAnchor.constraint(equalTo: iconLabel.bottomAnchor, constant: 8),
             countLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            countLabel.centerXAnchor.constraint(equalTo: iconLabel.centerXAnchor),
-            countLabel.heightAnchor.constraint(equalToConstant: 20)
+            countLabel.centerXAnchor.constraint(equalTo: iconLabel.centerXAnchor)
         ])
     }
 
     func set(itemInfoType: ItemInfoType, withCount count: Int) {
-        countLabel = GFTitleLabel(textAlignment: .center, fontSize: 14)
         switch itemInfoType {
         case .repos:
-            iconLabel = .init(
-                label: GFTitleLabel(textAlignment: .left, fontSize: 14),
+            iconLabel?.set(
                 systemIcon: SFSymbols.repos,
                 textAlignment: .left
             )
             iconLabel?.label?.text = "Public Repos"
         case .gists:
-            iconLabel = .init(
-                label: GFTitleLabel(textAlignment: .left, fontSize: 14),
+            iconLabel?.set(
                 systemIcon: SFSymbols.gists,
                 textAlignment: .left
             )
-            iconLabel?.label?.text = "Gists"
+            iconLabel?.label?.text = "Public Gists"
         case .followers:
-            iconLabel = .init(
-                label: GFTitleLabel(textAlignment: .left, fontSize: 14),
+            iconLabel?.set(
                 systemIcon: SFSymbols.followers,
                 textAlignment: .left
             )
             iconLabel?.label?.text = "Followers"
         case .following:
-            iconLabel = .init(
-                label: GFTitleLabel(textAlignment: .left, fontSize: 14),
+            iconLabel?.set(
                 systemIcon: SFSymbols.following,
                 textAlignment: .left
             )
-            iconLabel?.label?.text = "Public Repos"
+            iconLabel?.label?.text = "Following"
         }
         countLabel?.text = count.description
     }
 }
 
 #Preview {
-    let preview = GFIconLabelCountView(itemInfoType: .following, withCount: 11)
+    let preview = GFIconLabelCountView()
+    preview.set(itemInfoType: .following, withCount: 11)
     return preview
 }

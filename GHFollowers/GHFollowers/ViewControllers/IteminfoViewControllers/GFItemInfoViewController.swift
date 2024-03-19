@@ -9,15 +9,26 @@ import UIKit
 
 class GFItemInfoViewController: UIViewController {
     let stackView = UIStackView()
-    let itemInfoViewOne = GFIconLabelCountView()
-    let itemInfoViewTwo = GFIconLabelCountView()
+    let itemInfoViewOne = GFIconLabelCountView(frame: .zero)
+    let itemInfoViewTwo = GFIconLabelCountView(frame: .zero)
     let actionButton = GFButton()
+    var user: User?
+
+    init(user: User? = nil) {
+        super.init(nibName: nil, bundle: nil)
+        self.user = user
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackgroundView()
-        layoutUI()
         configureStackView()
+        layoutUI()
     }
 
     private func configureBackgroundView() {
@@ -47,11 +58,10 @@ class GFItemInfoViewController: UIViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
             stackView.heightAnchor.constraint(equalToConstant: 50),
 
-            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: padding),
+            actionButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding),
             actionButton.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
             actionButton.trailingAnchor.constraint(equalTo: stackView.trailingAnchor),
             actionButton.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
-
 }

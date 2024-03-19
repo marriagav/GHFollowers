@@ -18,6 +18,7 @@
 		D47B34832BA259C0003FE3C0 /* GFSecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B34822BA259C0003FE3C0 /* GFSecondaryTitleLabel.swift */; };
 		D47B34862BA26068003FE3C0 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B34852BA26068003FE3C0 /* UserInfoViewController.swift */; };
 		D47B34882BA263FA003FE3C0 /* SFSymbols.swift in Sources */ = {isa = PBXBuildFile; fileRef = D47B34872BA263FA003FE3C0 /* SFSymbols.swift */; };
+		D48EA4F82BA90564005A4639 /* GFFollowerItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48EA4F72BA90564005A4639 /* GFFollowerItemViewController.swift */; };
 		D4AEBFB02B9F538D0055EC47 /* GFError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AEBFAF2B9F538D0055EC47 /* GFError.swift */; };
 		D4AEBFB32B9F8C7A0055EC47 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AEBFB22B9F8C7A0055EC47 /* FollowerCell.swift */; };
 		D4AEBFB52B9F8CCF0055EC47 /* GFAvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4AEBFB42B9F8CCF0055EC47 /* GFAvatarImageView.swift */; };
@@ -54,6 +55,7 @@
 		D47B34822BA259C0003FE3C0 /* GFSecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFSecondaryTitleLabel.swift; sourceTree = "<group>"; };
 		D47B34852BA26068003FE3C0 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		D47B34872BA263FA003FE3C0 /* SFSymbols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbols.swift; sourceTree = "<group>"; };
+		D48EA4F72BA90564005A4639 /* GFFollowerItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFFollowerItemViewController.swift; sourceTree = "<group>"; };
 		D4AEBFAF2B9F538D0055EC47 /* GFError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFError.swift; sourceTree = "<group>"; };
 		D4AEBFB22B9F8C7A0055EC47 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		D4AEBFB42B9F8CCF0055EC47 /* GFAvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFAvatarImageView.swift; sourceTree = "<group>"; };
@@ -106,6 +108,16 @@
 				D47719022B9E36F600A45147 /* NetworkManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		D48EA4F92BA905A3005A4639 /* IteminfoViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D43DBE5A2BA7B65400E5D2E5 /* GFItemInfoViewController.swift */,
+				D43DBE5C2BA7BBA600E5D2E5 /* GFRepoItemViewController.swift */,
+				D48EA4F72BA90564005A4639 /* GFFollowerItemViewController.swift */,
+			);
+			path = IteminfoViewControllers;
 			sourceTree = "<group>";
 		};
 		D4AEBFAE2B9F537D0055EC47 /* Utilities */ = {
@@ -225,8 +237,7 @@
 				D4B42AB52B9CF3F700278507 /* GFAlertViewController.swift */,
 				D47B34852BA26068003FE3C0 /* UserInfoViewController.swift */,
 				D4FE11A62BA141370070F607 /* HeaderUserInfoViewController.swift */,
-				D43DBE5A2BA7B65400E5D2E5 /* GFItemInfoViewController.swift */,
-				D43DBE5C2BA7BBA600E5D2E5 /* GFRepoItemViewController.swift */,
+				D48EA4F92BA905A3005A4639 /* IteminfoViewControllers */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -352,6 +363,7 @@
 				D43DBE5D2BA7BBA600E5D2E5 /* GFRepoItemViewController.swift in Sources */,
 				D4AEBFB52B9F8CCF0055EC47 /* GFAvatarImageView.swift in Sources */,
 				D4EFCCC22B9BD2F2005F2E44 /* FollowerListViewController.swift in Sources */,
+				D48EA4F82BA90564005A4639 /* GFFollowerItemViewController.swift in Sources */,
 				D47B34882BA263FA003FE3C0 /* SFSymbols.swift in Sources */,
 				D4B42AB42B9CF36000278507 /* GFBodyLabel.swift in Sources */,
 				D4AEBFB32B9F8C7A0055EC47 /* FollowerCell.swift in Sources */,

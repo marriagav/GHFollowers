@@ -32,6 +32,8 @@ class UserInfoViewController: UIViewController {
         Task {
             await getUser()
             add(childVC: HeaderUserInfoViewController(user: user), to: headerView)
+            add(childVC: GFRepoItemViewController(user: user), to: itemViewOne)
+            add(childVC: GFFollowerItemViewController(user: user), to: itemViewTwo)
         }
     }
 
@@ -87,10 +89,6 @@ class UserInfoViewController: UIViewController {
                 )
             ])
         }
-
-        // TODO: temp code
-        itemViewOne.backgroundColor = .systemPink
-        itemViewTwo.backgroundColor = .systemCyan
 
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: padding),

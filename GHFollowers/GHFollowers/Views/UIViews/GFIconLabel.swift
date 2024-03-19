@@ -13,6 +13,8 @@ class GFIconLabel: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        label = GFTitleLabel(textAlignment: .left, fontSize: 14)
+        label?.translatesAutoresizingMaskIntoConstraints = false
         configure()
     }
 
@@ -23,10 +25,14 @@ class GFIconLabel: UIView {
 
     init(label: UILabel, systemIcon: String, textAlignment: NSTextAlignment) {
         super.init(frame: .zero)
-        label.textAlignment = textAlignment
-        iconView.image = UIImage(systemName: systemIcon)
+        set(systemIcon: systemIcon, textAlignment: textAlignment)
         self.label = label
         configure()
+    }
+
+    func set(systemIcon: String, textAlignment: NSTextAlignment) {
+        label?.textAlignment = textAlignment
+        iconView.image = UIImage(systemName: systemIcon)
     }
 
     private func configure() {
