@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FollowerListViewControllerDelegate: AnyObject {
+    func didRequestFollowers(for username: String)
+}
+
 class FollowerListViewController: UIViewController {
     enum Section {
         case main
@@ -51,9 +55,15 @@ class FollowerListViewController: UIViewController {
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
 
-    func configureViewController() {
+    private func configureViewController() {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.prefersLargeTitles = true
+        configureAddButton()
+    }
+
+    private func configureAddButton() {
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        navigationItem.rightBarButtonItem = addButton
     }
 
     func configureSearchController() {
@@ -112,6 +122,12 @@ class FollowerListViewController: UIViewController {
         snapshot.appendItems(followers)
         dataSource?.apply(snapshot, animatingDifferences: true)
     }
+
+    @objc
+    func addButtonTapped() {
+        // TODO: add button tapped functionality
+        print("TODO: add button tapped functionality")
+    }
 }
 
 // MARK: UICollectionViewDelegate
@@ -134,6 +150,7 @@ extension FollowerListViewController: UICollectionViewDelegate {
         let activeArray = isSearching ? filteredFollowers : followers
         let follower = activeArray[indexPath.item]
         let userInfoVC = UserInfoViewController(follower: follower)
+        userInfoVC.delegate = self
         let navController = UINavigationController(rootViewController: userInfoVC)
         navigationController?.present(navController, animated: true)
     }
@@ -153,5 +170,28 @@ extension FollowerListViewController: UISearchResultsUpdating {
             follower.login.lowercased().contains(filter.lowercased())
         }
         updateData(on: filteredFollowers)
+    }
+}
+
+// MARK: FollowerListViewControllerDelegate
+
+extension FollowerListViewController: FollowerListViewControllerDelegate {
+    func didRequestFollowers(for username: String) {
+        Task {
+            self.username = username
+            title = username
+            followers.removeAll()
+            filteredFollowers.removeAll()
+            page = 1
+            isSearching = false
+            navigationItem.searchController?.isActive = false
+            hasMoreFollowers = true
+            if let frame = navigationItem.searchController?.searchBar.frame {
+                collectionView?.scrollRectToVisible(frame, animated: false)
+            } else {
+                collectionView?.setContentOffset(.zero, animated: false)
+            }
+            await getFollowers()
+        }
     }
 }

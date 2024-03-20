@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol UserInfoViewControllerDelegate: AnyObject {
+    func didTapGitHubProfile()
+    func didTapGetFollowers()
+}
+
 class UserInfoViewController: UIViewController {
     var follower: Follower?
     var user: User?
@@ -16,6 +21,7 @@ class UserInfoViewController: UIViewController {
     let dateLabel = GFBodyLabel(textAlignment: .center)
     var headerViewHeightContraint: NSLayoutConstraint = .init()
     var itemOneTopContraint: NSLayoutConstraint = .init()
+    weak var delegate: FollowerListViewControllerDelegate?
 
     init(follower: Follower? = nil) {
         super.init(nibName: nil, bundle: nil)
@@ -35,7 +41,7 @@ class UserInfoViewController: UIViewController {
         configureChildViewControllers()
     }
 
-    func configureDoneButton() {
+    private func configureDoneButton() {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissVC))
         navigationItem.rightBarButtonItem = doneButton
         let standardAppearance = UINavigationBarAppearance()
@@ -49,7 +55,7 @@ class UserInfoViewController: UIViewController {
         dismiss(animated: true)
     }
 
-    func getUser() async {
+    private func getUser() async {
         showLoadingView()
         do {
             guard let follower = follower else { return }
@@ -65,41 +71,57 @@ class UserInfoViewController: UIViewController {
         }
     }
 
-    func configureChildViewControllers() {
+    private func configureChildViewControllers() {
         Task {
             await getUser()
-            let headerInfoVC = HeaderUserInfoViewController(user: user)
-            add(childVC: headerInfoVC, to: headerView)
-            add(childVC: GFRepoItemViewController(user: user), to: itemViewOne)
-            add(childVC: GFFollowerItemViewController(user: user), to: itemViewTwo)
-            self.dateLabel.text = "GitHub since \(user?.createdAt.convertToDisplayFormat() ?? "N/A")"
-            let padding: CGFloat = 20
-            let itemHeight: CGFloat = 140
-            if let bio = user?.bio {
-                guard let userCardView = headerInfoVC.userCardView else {
-                    return
-                }
-                headerView.removeConstraints([headerViewHeightContraint, itemOneTopContraint])
-                itemOneTopContraint = itemViewOne.topAnchor.constraint(
-                    equalTo: userCardView.bioLabel.bottomAnchor,
-                    constant: padding
-                )
-                NSLayoutConstraint.activate([
-                    itemOneTopContraint
-                ])
+            configureUIElements(with: user)
+        }
+    }
+
+    private func configureUIElements(with user: User?) {
+        let headerInfoVC = HeaderUserInfoViewController(user: user)
+        let repoItemVC = GFRepoItemViewController(user: user)
+        let followerItemVC = GFFollowerItemViewController(user: user)
+
+        repoItemVC.delegate = self
+        followerItemVC.delegate = self
+
+        add(childVC: headerInfoVC, to: headerView)
+        add(childVC: repoItemVC, to: itemViewOne)
+        add(childVC: followerItemVC, to: itemViewTwo)
+
+        dateLabel.text = "GitHub since \(user?.createdAt.convertToDisplayFormat() ?? "N/A")"
+
+        setBioSpaceIfNeeded(headerInfoVC: headerInfoVC)
+    }
+
+    private func setBioSpaceIfNeeded(headerInfoVC: HeaderUserInfoViewController) {
+        let padding: CGFloat = 20
+
+        if (user?.bio) != nil {
+            guard let userCardView = headerInfoVC.userCardView else {
+                return
             }
+            headerView.removeConstraints([headerViewHeightContraint, itemOneTopContraint])
+            itemOneTopContraint = itemViewOne.topAnchor.constraint(
+                equalTo: userCardView.bioLabel.bottomAnchor,
+                constant: padding
+            )
+            NSLayoutConstraint.activate([
+                itemOneTopContraint
+            ])
         }
     }
 
     @MainActor
-    func add(childVC: UIViewController, to containerView: UIView) {
+    private func add(childVC: UIViewController, to containerView: UIView) {
         addChild(childVC)
         containerView.addSubview(childVC.view)
         childVC.view.frame = containerView.bounds
         childVC.didMove(toParent: self)
     }
 
-    func layoutUI() {
+    private func layoutUI() {
         let itemViews = [headerView, itemViewOne, itemViewTwo, dateLabel]
 
         let padding: CGFloat = 20
@@ -134,5 +156,45 @@ class UserInfoViewController: UIViewController {
             dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
             dateLabel.heightAnchor.constraint(equalToConstant: 18)
         ])
+    }
+}
+
+// MARK: UserInfoViewControllerDelegate
+
+extension UserInfoViewController: UserInfoViewControllerDelegate {
+    func didTapGitHubProfile() {
+        // Show safari VC
+        guard let url = URL(string: user?.htmlUrl ?? "") else {
+            presentGFAlertOnMainThread(
+                title: "Invalid URL",
+                message: "The url attached to this user is invalid.",
+                buttonTitle: "Ok"
+            )
+            return
+        }
+        presentSafariVC(with: url)
+    }
+
+    func didTapGetFollowers() {
+        // Dismiss view
+        // Tell follower list screen the new user
+        guard let login = user?.login else {
+            presentGFAlertOnMainThread(
+                title: "Invalid username",
+                message: "The username attached to this user is invalid.",
+                buttonTitle: "Ok"
+            )
+            return
+        }
+        guard let followers = user?.followers, followers != 0 else {
+            presentGFAlertOnMainThread(
+                title: "No followers",
+                message: "This user has no followers.",
+                buttonTitle: "Ok"
+            )
+            return
+        }
+        delegate?.didRequestFollowers(for: login)
+        dismissVC()
     }
 }

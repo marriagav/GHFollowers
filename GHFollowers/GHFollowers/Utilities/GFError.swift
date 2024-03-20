@@ -13,6 +13,8 @@ enum GFError: Error {
     case unableToComplete
     case invalidResponse
     case invalidData
+    case unableToFavorite
+    case alreadyInFavorites
 }
 
 // MARK: LocalizedError
@@ -30,6 +32,10 @@ extension GFError: LocalizedError {
             return String(localized: "The data recieved from the server was invalid. Please try again.")
         case .invalidURL:
             return String(localized: "The request url is invalid. Please try again.")
+        case .unableToFavorite:
+            return String(localized: "There was an error favoriting this user. Please try again.")
+        case .alreadyInFavorites:
+            return String(localized: "You've already favorited this user.")
         }
     }
 }
