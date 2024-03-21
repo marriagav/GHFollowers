@@ -58,5 +58,4 @@ enum PersistanceManager {
             throw (GFError.unableToFavorite)
         }
     }
-
 }

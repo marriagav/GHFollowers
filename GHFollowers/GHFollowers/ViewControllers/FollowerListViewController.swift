@@ -125,8 +125,27 @@ class FollowerListViewController: UIViewController {
 
     @objc
     func addButtonTapped() {
-        // TODO: add button tapped functionality
-        print("TODO: add button tapped functionality")
+        showLoadingView()
+        Task {
+            do {
+                let user = try await NetworkManager.shared.getUser(for: username)
+                let favorite = Follower(login: user.login, avatarUrl: user.avatarUrl)
+                try PersistanceManager.updateWith(favorite: favorite, actionType: .add)
+                presentGFAlertOnMainThread(
+                    title: "Success!",
+                    message: "\(favorite.login) has been added to your favorites! 🥳",
+                    buttonTitle: "Ok"
+                )
+                dismissLoadingView()
+            } catch {
+                dismissLoadingView()
+                presentGFAlertOnMainThread(
+                    title: "Something went wrong",
+                    message: error.localizedDescription,
+                    buttonTitle: "Ok"
+                )
+            }
+        }
     }
 }
 
