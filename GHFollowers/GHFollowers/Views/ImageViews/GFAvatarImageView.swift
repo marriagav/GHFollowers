@@ -9,7 +9,6 @@ import UIKit
 
 class GFAvatarImageView: UIImageView {
     let placeHolderImage = UIImage(named: "avatar-placeholder")
-    let cache = NetworkManager.shared.imageCache
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,19 +28,8 @@ class GFAvatarImageView: UIImageView {
     }
 
     func downloadImage(from urlString: String) async {
-        let imageKey = NSString(string: urlString)
-        if let image = cache.object(forKey: imageKey) {
-            setImage(image)
-            return
-        }
-
         do {
-            guard let url = URL(string: urlString) else { throw GFError.invalidURL }
-            let data = try await NetworkManager.shared.getRequest(url: url)
-            guard let image = UIImage(data: data) else {
-                throw GFError.invalidData
-            }
-            cache.setObject(image, forKey: imageKey)
+            let image = try await NetworkManager.shared.getImage(from: urlString)
             setImage(image)
         } catch {
             print(error)

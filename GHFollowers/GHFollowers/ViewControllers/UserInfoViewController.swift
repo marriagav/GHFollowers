@@ -90,7 +90,7 @@ class UserInfoViewController: UIViewController {
         add(childVC: repoItemVC, to: itemViewOne)
         add(childVC: followerItemVC, to: itemViewTwo)
 
-        dateLabel.text = "GitHub since \(user?.createdAt.convertToDisplayFormat() ?? "N/A")"
+        dateLabel.text = "GitHub since \(user?.createdAt.convertToMonthYearFormat() ?? "N/A")"
 
         setBioSpaceIfNeeded(headerInfoVC: headerInfoVC)
     }

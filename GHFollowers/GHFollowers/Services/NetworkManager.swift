@@ -30,6 +30,21 @@ class NetworkManager {
         ])
     }
 
+    func getImage(from urlString: String) async throws -> UIImage {
+        let imageKey = NSString(string: urlString)
+        if let image = imageCache.object(forKey: imageKey) {
+            return image
+        }
+
+        guard let url = URL(string: urlString) else { throw GFError.invalidURL }
+        let data = try await NetworkManager.shared.getRequest(url: url)
+        guard let image = UIImage(data: data) else {
+            throw GFError.invalidData
+        }
+        imageCache.setObject(image, forKey: imageKey)
+        return image
+    }
+
     // With async/await
     func getFollowers(for username: String, page: Int) async throws -> [Follower] {
         guard var url = URL(string: baseURL) else {
@@ -62,6 +77,7 @@ class NetworkManager {
         do {
             let decoder = JSONDecoder()
             decoder.keyDecodingStrategy = .convertFromSnakeCase
+            decoder.dateDecodingStrategy = .iso8601
             let user = try decoder.decode(User.self, from: data)
             return user
         } catch {

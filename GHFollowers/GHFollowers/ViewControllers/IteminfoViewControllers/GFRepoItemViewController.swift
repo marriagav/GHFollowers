@@ -33,7 +33,7 @@ class GFRepoItemViewController: GFItemInfoViewController {
         htmlUrl: "test",
         followers: 4,
         following: 6,
-        createdAt: "now"
+        createdAt: Date()
     ))
     return preview
 }
