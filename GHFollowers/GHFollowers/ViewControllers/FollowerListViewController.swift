@@ -11,7 +11,7 @@ protocol FollowerListViewControllerDelegate: AnyObject {
     func didRequestFollowers(for username: String)
 }
 
-class FollowerListViewController: UIViewController {
+class FollowerListViewController: GFDataLoadingViewController {
     enum Section {
         case main
     }
@@ -24,6 +24,7 @@ class FollowerListViewController: UIViewController {
     var page = 1
     var hasMoreFollowers = true
     var isSearching = false
+    var isLoadingMoreFollowers = false
 
     init(username: String) {
         super.init(nibName: nil, bundle: nil)
@@ -87,6 +88,7 @@ class FollowerListViewController: UIViewController {
 
     func getFollowers() async {
         showLoadingView()
+        isLoadingMoreFollowers = true
         do {
             let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
             if followers.count < 100 {
@@ -97,12 +99,15 @@ class FollowerListViewController: UIViewController {
                 let message = "This user doesn't have any followers. Go Follow them 😄."
                 showEmptyStateView(with: message, in: view)
                 dismissLoadingView()
+                isLoadingMoreFollowers = false
                 return
             }
             updateData(on: self.followers)
             dismissLoadingView()
+            isLoadingMoreFollowers = false
         } catch {
             dismissLoadingView()
+            isLoadingMoreFollowers = false
             presentGFAlertOnMainThread(
                 title: "Bad stuff happened",
                 message: error.localizedDescription,
@@ -168,7 +173,7 @@ extension FollowerListViewController: UICollectionViewDelegate {
         let contentHeight = scrollView.contentSize.height
         let height = scrollView.frame.size.height
         if offsetY > (contentHeight - height) {
-            guard hasMoreFollowers else { return }
+            guard hasMoreFollowers, !isLoadingMoreFollowers else { return }
             page += 1
             Task {
                 await getFollowers()

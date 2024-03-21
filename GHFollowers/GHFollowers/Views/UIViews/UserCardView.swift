@@ -40,6 +40,7 @@ class UserCardView: UIView {
         Task {
             await avatarImageView.downloadImage(from: user?.avatarUrl ?? "")
         }
+        addSubviews(avatarImageView, usernameLabel, nameLabel, locationLabel, bioLabel)
         configureAvatarImage()
         configureUsernameLabel()
         configureNameLabel()
@@ -48,8 +49,6 @@ class UserCardView: UIView {
     }
 
     private func configureAvatarImage() {
-        addSubview(avatarImageView)
-
         NSLayoutConstraint.activate([
             avatarImageView.topAnchor.constraint(equalTo: topAnchor),
             avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -60,8 +59,6 @@ class UserCardView: UIView {
 
     private func configureUsernameLabel() {
         usernameLabel.text = user?.login
-        addSubview(usernameLabel)
-
         NSLayoutConstraint.activate([
             usernameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
             usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 12),
@@ -72,8 +69,6 @@ class UserCardView: UIView {
 
     private func configureNameLabel() {
         nameLabel.text = user?.name
-        addSubview(nameLabel)
-
         NSLayoutConstraint.activate([
             nameLabel.leadingAnchor.constraint(equalTo: usernameLabel.leadingAnchor),
             nameLabel.trailingAnchor.constraint(equalTo: usernameLabel.trailingAnchor),
@@ -97,7 +92,6 @@ class UserCardView: UIView {
 
     private func configureBioLabel() {
         bioLabel.text = user?.bio
-        addSubview(bioLabel)
         bioLabel.numberOfLines = 3
 
         NSLayoutConstraint.activate([

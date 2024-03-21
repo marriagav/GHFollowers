@@ -12,7 +12,7 @@ protocol UserInfoViewControllerDelegate: AnyObject {
     func didTapGetFollowers()
 }
 
-class UserInfoViewController: UIViewController {
+class UserInfoViewController: GFDataLoadingViewController {
     var follower: Follower?
     var user: User?
     let headerView = UIView()
@@ -146,6 +146,7 @@ class UserInfoViewController: UIViewController {
         ])
 
         itemOneTopContraint = itemViewOne.topAnchor.constraint(equalTo: headerView.bottomAnchor, constant: padding)
+
         NSLayoutConstraint.activate([
             itemOneTopContraint,
             itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),
@@ -154,7 +155,7 @@ class UserInfoViewController: UIViewController {
             itemViewTwo.heightAnchor.constraint(equalTo: itemViewOne.heightAnchor),
 
             dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
-            dateLabel.heightAnchor.constraint(equalToConstant: 18)
+            dateLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }

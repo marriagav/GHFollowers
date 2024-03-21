@@ -23,24 +23,23 @@ class GFIconLabel: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    init(label: UILabel, systemIcon: String, textAlignment: NSTextAlignment) {
+    init(label: UILabel, systemIcon: SFSymbols, textAlignment: NSTextAlignment) {
         super.init(frame: .zero)
         set(systemIcon: systemIcon, textAlignment: textAlignment)
         self.label = label
         configure()
     }
 
-    func set(systemIcon: String, textAlignment: NSTextAlignment) {
+    func set(systemIcon: SFSymbols, textAlignment: NSTextAlignment) {
         label?.textAlignment = textAlignment
-        iconView.image = UIImage(systemName: systemIcon)
+        iconView.image = systemIcon.symbolImage
     }
 
     private func configure() {
         guard let label = label else { return }
         iconView.tintColor = .secondaryLabel
         iconView.contentMode = .scaleAspectFill
-        addSubview(iconView)
-        addSubview(label)
+        addSubviews(iconView, label)
         iconView.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 

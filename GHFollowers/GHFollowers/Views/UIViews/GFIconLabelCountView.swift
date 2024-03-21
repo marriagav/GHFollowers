@@ -51,8 +51,7 @@ class GFIconLabelCountView: UIView {
         guard let iconLabel = iconLabel, let countLabel = countLabel else {
             return
         }
-        addSubview(iconLabel)
-        addSubview(countLabel)
+        addSubviews(iconLabel, countLabel)
         iconLabel.iconView.tintColor = .label
         countLabel.translatesAutoresizingMaskIntoConstraints = false
 
