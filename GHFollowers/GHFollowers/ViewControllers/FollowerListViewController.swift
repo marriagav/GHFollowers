@@ -87,20 +87,8 @@ class FollowerListViewController: GFDataLoadingViewController {
         isLoadingMoreFollowers = true
         do {
             let followers = try await NetworkManager.shared.getFollowers(for: username, page: page)
-            if followers.count < 100 {
-                hasMoreFollowers = false
-            }
-            self.followers.append(contentsOf: followers)
-            if self.followers.isEmpty {
-                let message = "This user doesn't have any followers. Go Follow them 😄."
-                showEmptyStateView(with: message, in: view)
-                dismissLoadingView()
-                isLoadingMoreFollowers = false
-                return
-            }
-            updateData(on: self.followers)
+            updateUI(with: followers)
             dismissLoadingView()
-            isLoadingMoreFollowers = false
         } catch {
             dismissLoadingView()
             isLoadingMoreFollowers = false
@@ -110,6 +98,22 @@ class FollowerListViewController: GFDataLoadingViewController {
                 buttonTitle: "Ok"
             )
         }
+    }
+
+    func updateUI(with followers: [Follower]) {
+        if followers.count < 100 {
+            hasMoreFollowers = false
+        }
+        self.followers.append(contentsOf: followers)
+        if self.followers.isEmpty {
+            let message = "This user doesn't have any followers. Go Follow them 😄."
+            showEmptyStateView(with: message, in: view)
+            dismissLoadingView()
+            isLoadingMoreFollowers = false
+            return
+        }
+        updateData(on: self.followers)
+        isLoadingMoreFollowers = false
     }
 
     func configureDataSource() {
@@ -204,7 +208,7 @@ extension FollowerListViewController: UISearchResultsUpdating {
     }
 }
 
-// MARK: FollowerListViewControllerDelegate
+// MARK: UserInfoViewControllerDelegate
 
 extension FollowerListViewController: UserInfoViewControllerDelegate {
     func didRequestFollowers(for username: String) {
