@@ -13,7 +13,6 @@ class GFItemInfoViewController: UIViewController {
     let itemInfoViewTwo = GFIconLabelCountView(frame: .zero)
     let actionButton = GFButton()
     var user: User?
-    weak var delegate: UserInfoViewControllerDelegate?
 
     init(user: User? = nil) {
         super.init(nibName: nil, bundle: nil)

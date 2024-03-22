@@ -7,7 +7,18 @@
 
 import UIKit
 
+protocol GFRepoItemInfoViewControllerDelegate: AnyObject {
+    func didTapGitHubProfile()
+}
+
 class GFRepoItemViewController: GFItemInfoViewController {
+    weak var delegate: GFRepoItemInfoViewControllerDelegate?
+
+    init(user: User?, delegate: GFRepoItemInfoViewControllerDelegate) {
+        super.init(user: user)
+        self.delegate = delegate
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureItems()
@@ -22,18 +33,4 @@ class GFRepoItemViewController: GFItemInfoViewController {
     override func actionButtonTapped() {
         delegate?.didTapGitHubProfile()
     }
-}
-
-#Preview {
-    let preview = GFRepoItemViewController(user: User(
-        login: "test",
-        avatarUrl: "test",
-        publicRepos: 2,
-        publicGists: 3,
-        htmlUrl: "test",
-        followers: 4,
-        following: 6,
-        createdAt: Date()
-    ))
-    return preview
 }

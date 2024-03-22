@@ -90,12 +90,12 @@ extension FavoritesListViewController: UITableViewDataSource, UITableViewDelegat
         guard editingStyle == .delete else {
             return
         }
-
         let favorite = favorites[indexPath.row]
-        favorites.remove(at: indexPath.row)
-        tableView.deleteRows(at: [indexPath], with: .left)
+
         do {
             try PersistanceManager.updateWith(favorite: favorite, actionType: .remove)
+            favorites.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .left)
         } catch {
             presentGFAlertOnMainThread(
                 title: "Something went wrong",
