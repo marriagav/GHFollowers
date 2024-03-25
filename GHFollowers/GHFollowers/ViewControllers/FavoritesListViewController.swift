@@ -22,6 +22,18 @@ class FavoritesListViewController: GFDataLoadingViewController {
         getFavorites()
     }
 
+    override func updateContentUnavailableConfiguration(using _: UIContentUnavailableConfigurationState) {
+        if favorites.isEmpty {
+            var config = UIContentUnavailableConfiguration.empty()
+            config.image = SFSymbols.star.symbolImage
+            config.text = "No Favorites"
+            config.secondaryText = "Add a favorite on the follower list screen"
+            contentUnavailableConfiguration = config
+        } else {
+            contentUnavailableConfiguration = nil
+        }
+    }
+
     func configureViewController() {
         view.backgroundColor = .systemBackground
         title = "Favorites"
@@ -43,11 +55,8 @@ class FavoritesListViewController: GFDataLoadingViewController {
     func getFavorites() {
         do {
             favorites = try PersistanceManager.retrieveFavorites()
-            if favorites.isEmpty {
-                showEmptyStateView(with: "No favorites yet.\nAdd one on the follower screen.", in: view)
-            } else {
-                reloadTableViewData()
-            }
+            reloadTableViewData()
+            setNeedsUpdateContentUnavailableConfiguration()
         } catch {
             presentGFAlertOnMainThread(
                 title: "Something went wrong",
@@ -96,6 +105,7 @@ extension FavoritesListViewController: UITableViewDataSource, UITableViewDelegat
             try PersistanceManager.updateWith(favorite: favorite, actionType: .remove)
             favorites.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .left)
+            setNeedsUpdateContentUnavailableConfiguration()
         } catch {
             presentGFAlertOnMainThread(
                 title: "Something went wrong",

@@ -13,6 +13,11 @@ enum SFSymbols {
     case gists
     case followers
     case following
+    case alert
+    case person
+    case people
+    case star
+    case personSlash
 
     var symbolImage: UIImage? {
         switch self {
@@ -26,6 +31,16 @@ enum SFSymbols {
             return UIImage(systemName: "heart")
         case .following:
             return UIImage(systemName: "person.2")
+        case .alert:
+            return UIImage(systemName: "checkmark.circle")
+        case .person:
+            return UIImage(systemName: "person")
+        case .people:
+            return UIImage(systemName: "person.3")
+        case .star:
+            return UIImage(systemName: "star")
+        case .personSlash:
+            return UIImage(systemName: "person.slash")
         }
     }
 }

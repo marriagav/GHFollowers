@@ -72,7 +72,7 @@ class UserInfoViewController: GFDataLoadingViewController {
     private func getUser() async {
         showLoadingView()
         do {
-            guard let follower = follower else { return }
+            guard let follower else { return }
             user = try await NetworkManager.shared.getUser(for: follower.login)
             dismissLoadingView()
         } catch {

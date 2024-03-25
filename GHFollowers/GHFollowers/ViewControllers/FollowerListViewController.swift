@@ -49,12 +49,26 @@ class FollowerListViewController: GFDataLoadingViewController {
         navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
+    override func updateContentUnavailableConfiguration(using _: UIContentUnavailableConfigurationState) {
+        if followers.isEmpty && !isLoadingMoreFollowers {
+            var config = UIContentUnavailableConfiguration.empty()
+            config.image = SFSymbols.personSlash.symbolImage
+            config.text = "No Followers"
+            config.secondaryText = "This user has no followers. Go follow them!"
+            contentUnavailableConfiguration = config
+        } else if isSearching && filteredFollowers.isEmpty {
+            contentUnavailableConfiguration = UIContentUnavailableConfiguration.search()
+        } else {
+            contentUnavailableConfiguration = nil
+        }
+    }
+
     func configureCollectionView() {
         collectionView = UICollectionView(
             frame: view.bounds,
             collectionViewLayout: UIHelper.createThreeColumnFlowLayout(in: view)
         )
-        guard let collectionView = collectionView else {
+        guard let collectionView else {
             fatalError("Collection view is nil when configuring it")
         }
         view.addSubview(collectionView)
@@ -105,19 +119,13 @@ class FollowerListViewController: GFDataLoadingViewController {
             hasMoreFollowers = false
         }
         self.followers.append(contentsOf: followers)
-        if self.followers.isEmpty {
-            let message = "This user doesn't have any followers. Go Follow them 😄."
-            showEmptyStateView(with: message, in: view)
-            dismissLoadingView()
-            isLoadingMoreFollowers = false
-            return
-        }
         updateData(on: self.followers)
         isLoadingMoreFollowers = false
+        setNeedsUpdateContentUnavailableConfiguration()
     }
 
     func configureDataSource() {
-        guard let collectionView = collectionView else {
+        guard let collectionView else {
             fatalError("Collection view is nil when configuring it")
         }
         dataSource = UICollectionViewDiffableDataSource<Section, Follower>(
@@ -205,6 +213,7 @@ extension FollowerListViewController: UISearchResultsUpdating {
             follower.login.lowercased().contains(filter.lowercased())
         }
         updateData(on: filteredFollowers)
+        setNeedsUpdateContentUnavailableConfiguration()
     }
 }
 

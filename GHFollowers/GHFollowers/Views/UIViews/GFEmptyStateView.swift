@@ -8,6 +8,7 @@
 import UIKit
 
 class GFEmptyStateView: UIView {
+    // NOTE: This is legacy code not used anymore
     let messageLabel = GFTitleLabel(textAlignment: .center, fontSize: 28)
     let logoImageView = UIImageView()
 
@@ -60,7 +61,7 @@ class GFEmptyStateView: UIView {
             .isiPhone8Zoomed || DeviceTypes.isiPhoneSE2 ? 100 : 40
 
         let logoImageViewBottomAnchorConstraint = logoImageView.bottomAnchor.constraint(
-            equalTo: bottomAnchor,
+            equalTo: safeAreaLayoutGuide.bottomAnchor,
             constant: logoImageViewBottomConstant
         )
 

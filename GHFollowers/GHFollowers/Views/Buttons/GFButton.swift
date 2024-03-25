@@ -18,25 +18,29 @@ class GFButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    convenience init(backgroundColor: UIColor, title: String) {
+    convenience init(color: UIColor, title: String, systemImage: SFSymbols) {
         self.init(frame: .zero)
-        set(backgroundColor: backgroundColor, title: title)
+        set(color: color, title: title, systemImage: systemImage)
     }
 
     private func configure() {
-        layer.cornerRadius = 10
-        setTitleColor(.white, for: .normal)
-        titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
+        configuration = .tinted()
+        configuration?.cornerStyle = .medium
         translatesAutoresizingMaskIntoConstraints = false
     }
 
-    func set(backgroundColor: UIColor, title: String) {
-        self.backgroundColor = backgroundColor
-        setTitle(title, for: .normal)
+    func set(color: UIColor, title: String, systemImage: SFSymbols) {
+        configuration?.baseBackgroundColor = color
+        configuration?.baseForegroundColor = color
+        configuration?.title = title
+
+        configuration?.image = systemImage.symbolImage
+        configuration?.imagePadding = 6
+        configuration?.imagePlacement = .leading
     }
 }
 
 #Preview {
-    let button = GFButton(backgroundColor: .blue, title: "TestButton")
+    let button = GFButton(color: .blue, title: "Test Button", systemImage: .followers)
     return button
 }

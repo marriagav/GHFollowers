@@ -48,7 +48,7 @@ class GFIconLabelCountView: UIView {
 
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
-        guard let iconLabel = iconLabel, let countLabel = countLabel else {
+        guard let iconLabel, let countLabel else {
             return
         }
         addSubviews(iconLabel, countLabel)

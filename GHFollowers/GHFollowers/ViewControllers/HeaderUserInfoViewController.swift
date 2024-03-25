@@ -29,7 +29,7 @@ class HeaderUserInfoViewController: UIViewController {
 
     func configureUserCard() {
         userCardView = UserCardView(frame: view.bounds, user: user)
-        guard let userCardView = userCardView else { return }
+        guard let userCardView else { return }
         view.addSubview(userCardView)
         NSLayoutConstraint.activate([
             userCardView.topAnchor.constraint(equalTo: view.topAnchor),

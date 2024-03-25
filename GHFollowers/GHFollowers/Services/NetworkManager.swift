@@ -12,8 +12,12 @@ class NetworkManager {
     private let baseURL = "https://api.github.com/users/"
     private let usersPerPage = 100
     let imageCache = NSCache<NSString, UIImage>()
+    private let decoder = JSONDecoder()
 
-    private init() {}
+    private init() {
+        decoder.dateDecodingStrategy = .iso8601
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+    }
 
     func getRequest(url: URL) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(for: URLRequest(url: url))
@@ -57,8 +61,6 @@ class NetworkManager {
         let data = try await getRequest(url: url)
 
         do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
             let followers = try decoder.decode([Follower].self, from: data)
             return followers
         } catch {
@@ -75,9 +77,6 @@ class NetworkManager {
         let data = try await getRequest(url: url)
 
         do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            decoder.dateDecodingStrategy = .iso8601
             let user = try decoder.decode(User.self, from: data)
             return user
         } catch {
@@ -110,15 +109,13 @@ class NetworkManager {
                 return
             }
 
-            guard let data = data else {
+            guard let data else {
                 completion(.failure(GFError.invalidData))
                 return
             }
 
             do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let followers = try decoder.decode([Follower].self, from: data)
+                let followers = try self.decoder.decode([Follower].self, from: data)
                 completion(.success(followers))
             } catch {
                 completion(.failure(GFError.invalidData))

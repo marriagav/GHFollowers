@@ -36,7 +36,7 @@ class GFIconLabel: UIView {
     }
 
     private func configure() {
-        guard let label = label else { return }
+        guard let label else { return }
         iconView.tintColor = .secondaryLabel
         iconView.contentMode = .scaleAspectFill
         addSubviews(iconView, label)
