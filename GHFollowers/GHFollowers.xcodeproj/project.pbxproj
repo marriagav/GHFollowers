@@ -258,6 +258,10 @@
 			isa = PBXGroup;
 			children = (
 				D4CB39252B8FF1F300071554 /* GHFollowers */,
+				D43861C02BB1EBE100BED1E5 /* ci_scripts */,
+				D4EFCCC42B9BE433005F2E44 /* .swiftlint.yml */,
+				D4EFCCC62B9BE45F005F2E44 /* .swiftformat */,
+				D4EFCCC82B9BE47C005F2E44 /* .swift-version */,
 				D4CB39242B8FF1F300071554 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -281,11 +285,7 @@
 				D4EFCCBA2B9B8F97005F2E44 /* Views */,
 				D47719012B9E36E400A45147 /* Services */,
 				D4B42AB72B9CFA4300278507 /* Extensions */,
-				D43861C02BB1EBE100BED1E5 /* ci_scripts */,
 				D4CB39342B8FF1F400071554 /* Info.plist */,
-				D4EFCCC42B9BE433005F2E44 /* .swiftlint.yml */,
-				D4EFCCC62B9BE45F005F2E44 /* .swiftformat */,
-				D4EFCCC82B9BE47C005F2E44 /* .swift-version */,
 				D4CB392F2B8FF1F400071554 /* Assets.xcassets */,
 				D4CB39312B8FF1F400071554 /* LaunchScreen.storyboard */,
 			);
