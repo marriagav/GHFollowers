@@ -120,8 +120,8 @@ class FollowerListViewController: GFDataLoadingViewController {
         }
         self.followers.append(contentsOf: followers)
         updateData(on: self.followers)
-        isLoadingMoreFollowers = false
         setNeedsUpdateContentUnavailableConfiguration()
+        isLoadingMoreFollowers = false
     }
 
     func configureDataSource() {
